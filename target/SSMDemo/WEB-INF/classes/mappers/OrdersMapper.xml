@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itrum.ssm.demo.dao.IOrders">
+    <resultMap id="myResultMap" type="Orders">
+        <id property="id" column="id"/>
+        <result property="orderNum" column="orderNum"/>
+        <result property="orderTime" column="orderTime"/>
+        <result property="peopleCount" column="peopleCount"/>
+        <result property="orderDesc" column="orderDesc"/>
+        <result property="payType" column="payType"/>
+        <result property="orderStatus" column="orderStatus"/>
+        <association property="product" javaType="Product" >
+            <id property="id" column="id"/>
+            <result property="productNum" column="productNum"/>
+            <result property="productName" column="productName"/>
+            <result property="cityName" column="cityName"/>
+            <result property="departureTime" column="DepartureTime"/>
+            <result property="productPrice" column="productPrice"/>
+            <result property="productDesc" column="productDesc"/>
+            <result property="productStatus" column="productStatus"/>
+        </association>
+        <association property="member" javaType="Member">
+            <id property="id" column="id"/>
+            <result property="name" column="mname"/>
+            <result property="nickname" column="nickname"/>
+            <result property="phoneNum" column="phoneNum"/>
+            <result property="email" column="email"/>
+        </association>
+        <collection property="travellers" ofType="Traveller">
+            <id property="id" column="id"/>
+            <result property="name" column="tname"/>
+            <result property="sex" column="sex"/>
+            <result property="phoneNum" column="phoneNum"/>
+            <result property="credentialsType" column="credentialsType"/>
+            <result property="credentialsNum" column="credentialsNum"/>
+            <result property="travellerType" column="travellerType"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultMap="myResultMap">
+       select o.id,o.orderNum,o.orderTime,o.peopleCount,o.orderDesc,o.payType,o.orderStatus,p.productName,p.productPrice,p.productStatus from `orders` o ,product p
+       where p.id=o.productId
+   </select>
+    <select id="findById" resultMap="myResultMap">
+        select o.id,o.orderNum,o.orderTime,o.peopleCount,o.orderDesc,o.payType,o.orderStatus,p.productName,p.productPrice,p.productStatus, m.id,m.NAME mname,m.nickname,m.phoneNum,m.email,ot.orderId,ot.travellerId,t.id,t.NAME tname,t.sex,t.travellerType,t.phoneNum,t.credentialsType,t.credentialsNum FROM `orders` o ,product p,member m,order_traveller ot,traveller t
+        where p.id=o.productId and m.id=o.memberId and ot.orderId=o.id and ot.travellerId=t.id and o.id=#{id}
+    </select>
+
+
+</mapper>

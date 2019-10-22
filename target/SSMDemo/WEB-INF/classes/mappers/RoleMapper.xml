@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "com.itrum.ssm.demo.dao.IRole">
+    <resultMap id="myResultMap" type="Role">
+        <id property="id" column="id"/>
+        <result property="roleName" column="roleName"/>
+        <result property="roleDesc" column="roleDesc"/>
+    </resultMap>
+    <select id="findRoleByUserId" resultMap="myResultMap">
+        select id,roleName,roleDesc from role where id in (select roleId from users_role where userId=#{id})
+    </select>
+    <select id="findAll" resultMap="myResultMap">
+         select id,roleName,roleDesc from role
+    </select>
+    <insert id="save">
+        INSERT INTO role(id,roleName,roleDesc)VALUES(null,#{roleName},#{roleDesc})
+    </insert>
+    <select id="findById" resultMap="myResultMap">
+         select id,roleName,roleDesc from role where id=#{id}
+    </select>
+    <select id="findUserByIdAndAllRole" resultMap="myResultMap">
+        select * from role where id not in(select roleId from users_role where userId=#{id})
+    </select>
+</mapper>

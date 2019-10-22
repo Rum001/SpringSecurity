@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itrum.ssm.demo.dao.IPermission">
+    <resultMap id="myResultMap" type="Permission">
+        <id property="id" column="id"/>
+        <result property="permissionName" column="permissionName"/>
+        <result property="url" column="url"/>
+    </resultMap>
+
+    <select id="findPermissionByRoleId" resultMap="myResultMap">
+        select id,permissionName,url from permission WHERE id in (select permissionId from role_permission where roleId=#{roleId} )
+    </select>
+    <select id="findAll" resultMap="myResultMap">
+        select id,permissionName,url from permission
+    </select>
+    <insert id="save">
+        insert  into permission(id,permissionName,url)values (null ,#{permissionName},#{url})
+    </insert>
+    <delete id="deletePermission">
+        delete from permission where id=#{id}
+    </delete>
+    <delete id="deletePermission_role">
+        delete from role_permission where permissionId=#{id}
+    </delete>
+    <select id="findById" resultMap="myResultMap">
+        select id,permissionName,url from permission where id=#{id}
+    </select>
+    <select id="findRoleByIdAndAllPermission" resultMap="myResultMap">
+        select id,permissionName,url from permission WHERE id not in(select permissionId  from role_permission where roleId=#{roleId})
+    </select>
+    <insert id="addPermissionToRole">
+        insert into role_permission(roleId,permissionId)values(#{roleId},#{permissionId})
+    </insert>
+
+</mapper>

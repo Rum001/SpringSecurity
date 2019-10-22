@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "com.itrum.ssm.demo.dao.ISysLog">
+    <resultMap id="myResultMap" type="SysLog">
+        <id property="id" column="id"/>
+        <result property="visitTime" column="visitTime"/>
+        <result property="username" column="username"/>
+        <result property="ip" column="ip"/>
+        <result property="url" column="url"/>
+        <result property="executionTime" column="executionTime"/>
+        <result property="method" column="method"/>
+    </resultMap>
+    <insert id="save">
+        INSERT INTO syslog(id,visitTime,username,ip,url,executionTime,method)VALUES(null,#{visitTime},#{username},#{ip},#{url},#{executionTime},#{method})
+    </insert>
+
+    <select id="findAll" resultMap="myResultMap">
+        select id,visitTime,username,ip,url,executionTime,method from syslog
+    </select>
+
+</mapper>

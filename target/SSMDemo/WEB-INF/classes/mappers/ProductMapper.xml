@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itrum.ssm.demo.dao.IProduct">
+    <resultMap id="myResultMap" type="Product">
+        <id property="id" column="id"/>
+        <result property="productNum" column="productNum"/>
+        <result property="productName" column="productName"/>
+        <result property="cityName" column="cityName"/>
+        <result property="departureTime" column="DepartureTime"/>
+        <result property="productPrice" column="productPrice"/>
+        <result property="productDesc" column="productDesc"/>
+        <result property="productStatus" column="productStatus"/>
+    </resultMap>
+    <select id="findAll" resultMap="myResultMap">
+       select id,productNum,productName,cityName,`DepartureTime`,productPrice,productDesc,productStatus from `product`
+   </select>
+    <insert id="save">
+    insert into PRODUCT (id, productnum, productname, cityname, departuretime, productprice, productdesc, productstatus)
+    values (null, #{productNum},  #{productName},  #{cityName}, #{departureTime},  #{productPrice},  #{productDesc},  #{productStatus});
+    </insert>
+
+
+</mapper>

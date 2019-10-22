@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itrum.ssm.demo.dao.IUsers">
+    <resultMap id="myResultMap" type="UserInfo">
+        <id property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="username" column="username"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="phoneNum" column="phoneNum"/>
+        <result property="status" column="STATUS"/>
+    </resultMap>
+    <select id="findUserById" resultMap="myResultMap">
+    select id,email,username,PASSWORD,phoneNum,STATUS
+    from users where username=#{username}
+    </select>
+    <select id="findAll" resultMap="myResultMap">
+        select id,email,username,PASSWORD,phoneNum,STATUS
+        from users
+    </select>
+    <insert id="save">
+        insert into users(id,email,username,PASSWORD,phoneNum,STATUS)values (null,#{email},#{username},#{password},#{phoneNum},#{status})
+    </insert>
+
+    <select id="findById" resultMap="myResultMap">
+         select id,email,username,PASSWORD,phoneNum,STATUS
+         from users where id=#{id}
+    </select>
+
+    <insert id="addRoleToUser">
+        insert into users_role(userId,roleId)values (#{userId},#{roleId})
+
+    </insert>
+
+</mapper>
